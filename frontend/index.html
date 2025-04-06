@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Polling App</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #1e1e2f; }
+    
+    .nav { margin-bottom: 20px; display: flex; align-items: center; }
+    .nav a { padding: 20px; text-decoration: none; color: white; cursor: pointer; }
+    .poll-block { border: 1px solid #b3e6ff; padding: 15px; margin-bottom: 20px; border-radius: 8px; width: 90%; }
+    .input { display: block; margin-bottom: 10px; padding: 8px; margin-left: 9%; width: 80%; border: 1px solid #b3e6ff; }
+    .button { padding: 8px 16px; margin-right: 10px; margin-top: 10px; cursor: pointer; background: #00aaff; color: white; border: none; border-radius: 4px; }
+    .buttons{ display: flex; justify-content: center;}
+    a ,h2 ,h3{color: white;}
+    input{background-color: #1e1e2f;  border-radius:4px ; }
+    
+
+    
+  </style>
+</head>
+<body>
+  <header style="display: flex; justify-content: space-between;">
+    <div class="logo"></div>
+    <div class="nav">
+      <a onclick="showCreatePoll()">Create Poll</a>
+      <a onclick="showVotePoll()">Vote on Polls</a>
+    </div>
+  </header>
+
+  <div id="create-poll" style="display: none;">
+    <div style="display: flex; justify-content: center;"><h2>Create a Poll</h2></div>
+    <input id="poll-question" class="input" placeholder="Poll question" />
+    <div id="poll-options">
+      <input class="input option" placeholder="Option 1" />
+      <input class="input option" placeholder="Option 2" />
+    </div>
+    <div class="buttons">
+      <button class="button" onclick="addOption()">Add Option</button>
+      <button class="button" onclick="createPoll()">Create Poll</button>
+    </div>
+  </div>
+
+  <div id="vote-poll" style="display: none;">
+    <div style="display: flex; justify-content: center;"><h2>Available Polls</h2></div>
+    <div id="poll-list" style="display: flex; flex-direction: column; justify-content: center; align-items: center;"></div>
+  </div>
+
+  <script>
+    const API = "http://localhost:5000/api";
+
+    function showCreatePoll() {
+      document.getElementById('create-poll').style.display = 'block';
+      document.getElementById('vote-poll').style.display = 'none';
+    }
+
+    function showVotePoll() {
+      document.getElementById('create-poll').style.display = 'none';
+      document.getElementById('vote-poll').style.display = 'block';
+      loadPolls();
+    }
+
+    function addOption() {
+      const input = document.createElement('input');
+      input.className = 'input option';
+      input.placeholder = `Option`;
+      document.getElementById('poll-options').appendChild(input);
+    }
+
+    async function createPoll() {
+      const question = document.getElementById('poll-question').value;
+      const options = Array.from(document.querySelectorAll('.option')).map(opt => opt.value).filter(v => v);
+
+      if (!question || options.length < 2) {
+        alert('Please provide a question and at least two options.');
+        return;
+      }
+
+      await fetch(`${API}/polls`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question, options })
+      });
+
+      alert('Poll created!');
+      document.getElementById('poll-question').value = '';
+      document.getElementById('poll-options').innerHTML = `
+        <input class="input option" placeholder="Option 1" />
+        <input class="input option" placeholder="Option 2" />
+      `;
+    }
+
+    async function loadPolls() {
+      const res = await fetch(`${API}/polls`);
+      const polls = await res.json();
+      const list = document.getElementById('poll-list');
+      list.innerHTML = '';
+
+      polls.forEach(poll => {
+        const div = document.createElement('div');
+        div.className = 'poll-block';
+        div.innerHTML = `<h3>${poll.question}</h3>`;
+        poll.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'button';
+          btn.innerText = `Vote for "${opt.text}" (${opt.votes} votes)`;
+          btn.onclick = () => vote(poll._id, idx);
+          div.appendChild(btn);
+        });
+        list.appendChild(div);
+      });
+    }
+
+    async function vote(pollId, optionIndex) {
+      await fetch(`${API}/polls/${pollId}/vote`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ optionIndex })
+      });
+      loadPolls();
+    }
+
+    // Default to vote page on load
+    showVotePoll();
+  </script>
+</body>
+</html>
