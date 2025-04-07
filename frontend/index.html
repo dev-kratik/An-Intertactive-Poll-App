@@ -7,25 +7,25 @@
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #1e1e2f; }
     
-    .nav { margin-bottom: 20px; display: flex; align-items: center; }
-    .nav a { padding: 20px; text-decoration: none; color: white; cursor: pointer; }
+    .nav { margin-bottom: 20px; display: flex; justify-content: center; align-items: center; margin-top: 24%; }
+    .nav a { padding: 8px 16px; text-decoration: none; color: white; cursor: pointer; margin: 10px; border: none; border-radius: 4px; }
     .poll-block { border: 1px solid #b3e6ff; padding: 15px; margin-bottom: 20px; border-radius: 8px; width: 90%; }
     .input { display: block; margin-bottom: 10px; padding: 8px; margin-left: 9%; width: 80%; border: 1px solid #b3e6ff; }
     .button { padding: 8px 16px; margin-right: 10px; margin-top: 10px; cursor: pointer; background: #00aaff; color: white; border: none; border-radius: 4px; }
     .buttons{ display: flex; justify-content: center;}
     a ,h2 ,h3{color: white;}
-    input{background-color: #1e1e2f;  border-radius:4px ; }
+    input{background-color: #1e1e2f;  border-radius:4px ; color: white; }
     
 
     
   </style>
 </head>
 <body>
-  <header style="display: flex; justify-content: space-between;">
+  <header style="display: flex; flex-direction: column; justify-content: space-between;">
     <div class="logo"></div>
-    <div class="nav">
-      <a onclick="showCreatePoll()">Create Poll</a>
-      <a onclick="showVotePoll()">Vote on Polls</a>
+    <div class="nav" id="nav">
+      <a onclick="showCreatePoll()" style="background-color: #00aaff;">Create Poll</a>
+      <a onclick="showVotePoll()" style="background-color: #00aaff;">Vote on Polls</a>
     </div>
   </header>
 
@@ -36,7 +36,7 @@
       <input class="input option" placeholder="Option 1" />
       <input class="input option" placeholder="Option 2" />
     </div>
-    <div class="buttons">
+    <div class="buttons" >
       <button class="button" onclick="addOption()">Add Option</button>
       <button class="button" onclick="createPoll()">Create Poll</button>
     </div>
@@ -53,11 +53,13 @@
     function showCreatePoll() {
       document.getElementById('create-poll').style.display = 'block';
       document.getElementById('vote-poll').style.display = 'none';
+      document.getElementById('nav').style.display='none';
     }
 
     function showVotePoll() {
       document.getElementById('create-poll').style.display = 'none';
       document.getElementById('vote-poll').style.display = 'block';
+      document.getElementById('nav').style.display='none';
       loadPolls();
     }
 
@@ -122,7 +124,7 @@
     }
 
     // Default to vote page on load
-    showVotePoll();
+    
   </script>
 </body>
 </html>
