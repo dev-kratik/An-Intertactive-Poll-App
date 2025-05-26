@@ -32,7 +32,7 @@ An-Intertactive-Poll-App/
 
 ### 1. Clone the repo
 
-git clone https://github.com/your-username/poll-app.git
+git clone https://github.com/dev-kratik/An-Intertactive-Poll-App.git
 cd poll-app
 
 ### 2. Install dependencies
