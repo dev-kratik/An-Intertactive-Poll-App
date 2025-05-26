@@ -19,3 +19,37 @@ A full-stack poll application where users can vote and view poll results in real
 
 ## 📁 Folder Structure
 
+```
+An-Intertactive-Poll-App/
+├── frontend/ # HTML/CSS/JS frontend files
+├── backend/
+│ ├── models/ # Mongoose models
+     ├── Poll.js
+│ ├── server.js # Entry point for Express server
+└── README.md
+```
+## 🚀 Getting Started
+
+### 1. Clone the repo
+
+git clone https://github.com/your-username/poll-app.git
+cd poll-app
+
+### 2. Install dependencies
+
+npm install
+
+### 3. Set up your .env file
+
+MONGO_URI=mongodb+srv://your-db-url
+PORT=5000
+
+### 4. Run the app
+
+node backend/server.js
+
+
+
+
+
+
