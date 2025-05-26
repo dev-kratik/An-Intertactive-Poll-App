@@ -31,9 +31,9 @@ An-Intertactive-Poll-App/
 ## 🚀 Getting Started
 
 ### 1. Clone the repo
-
+```
 git clone https://github.com/dev-kratik/An-Intertactive-Poll-App.git
-
+```
 ### 2. Install dependencies
 
 npm install
@@ -46,9 +46,9 @@ PORT=5000
 ```
 
 ### 4. Run the app
-
+```
 node backend/server.js
-
+```
 
 
 
