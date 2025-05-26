@@ -33,7 +33,6 @@ An-Intertactive-Poll-App/
 ### 1. Clone the repo
 
 git clone https://github.com/dev-kratik/An-Intertactive-Poll-App.git
-cd poll-app
 
 ### 2. Install dependencies
 
@@ -41,8 +40,10 @@ npm install
 
 ### 3. Set up your .env file
 
+```
 MONGO_URI=mongodb+srv://your-db-url
 PORT=5000
+```
 
 ### 4. Run the app
 
