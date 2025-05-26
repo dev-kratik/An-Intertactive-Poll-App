@@ -35,9 +35,9 @@ An-Intertactive-Poll-App/
 git clone https://github.com/dev-kratik/An-Intertactive-Poll-App.git
 ```
 ### 2. Install dependencies
-
+```
 npm install
-
+```
 ### 3. Set up your .env file
 
 ```
